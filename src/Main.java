@@ -23,7 +23,9 @@ public class Main {
                 }
 
                 printBytes(size, f_output, buff, useful);
-                f_output.write("   ");
+
+                if (useful)
+                    f_output.write("   ");
                 count += size;
 
                 if (buff[7] == 3){
