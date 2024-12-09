@@ -10,8 +10,8 @@ public class Main {
 
         try {
             File f = new File("190829_v29854.KNP");
-            FileInputStream f_input= new FileInputStream(f);
-            FileWriter f_output= new FileWriter("useful.rez");
+            FileInputStream f_input = new FileInputStream(f);
+            FileWriter f_output = new FileWriter("useful.rez");
 
             while(f_input.read(buff,0,2) > 0) {
                 current = new TmData(buff, f_input);

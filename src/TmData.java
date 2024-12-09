@@ -69,10 +69,10 @@ public class TmData {
             out.write("  ");
             out.write(Integer.toString(this.type));
             out.write("  ");
-            out.write(Integer.toString(this.length));
-            out.write("  ");
-            for (int i = 0; i < this.length; ++i)
-                out.write(String.format("%02x", this.data[i]) + " ");
+            if (this.type == 3)
+                this.putTypeThree(out);
+            else
+                this.putOtherType(out);
             out.write("\n");
         }
         catch (Exception e){
@@ -82,5 +82,27 @@ public class TmData {
 
     boolean useful(){
         return !this.num.equals("ffff");
+    }
+
+    private void putTypeThree(FileWriter out) throws IOException {
+        out.write(Integer.toString(this.length));
+        out.write("  ");
+        for (int i = 0; i < this.length; ++i)
+            out.write(String.format("%02x", this.data[i]) + " ");
+    }
+
+    private void putOtherType(FileWriter out) throws IOException {
+        long data = 0;
+        for (int i = 0; i < this.length; ++i)
+            data += (long) (this.data[this.length - 1 - i] * Math.pow(256, this.length - 1 - i));
+
+        if (this.type == 2) {
+            String binary = Long.toBinaryString(data);
+            out.write(Integer.toString(binary.length()));
+            out.write("  ");
+            out.write(binary);
+        }
+        else
+            out.write(Long.toString(data));
     }
 }
